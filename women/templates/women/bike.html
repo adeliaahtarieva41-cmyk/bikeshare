@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bike-detail">
+    <h1 class="section-title">{{ bike.name }}</h1>
+
+    <!-- ОТОБРАЖЕНИЕ ФОТО -->
+    {% if bike.photo %}
+        <div class="bike-photo">
+            <img src="{{ bike.photo.url }}" alt="{{ bike.name }}">
+        </div>
+    {% else %}
+        <div class="bike-photo placeholder">
+            <i class="fas fa-bicycle"></i>
+            <p>Нет фото</p>
+        </div>
+    {% endif %}
+
+    <div class="bike-tags">
+        {% with bike.tags.all as tags %}
+            {% if tags %}
+                <span class="tags-label">Теги:</span>
+                {% for t in tags %}
+                    <a href="{{ t.get_absolute_url }}" class="tag-link">{{ t.tag }}</a>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="bike-details">
+        <p><strong>Бренд:</strong> {{ bike.brand }}</p>
+        <p><strong>Модель:</strong> {{ bike.model }}</p>
+        <p><strong>Цена за час:</strong> {{ bike.price_per_hour }} ₽</p>
+        <p><strong>Цена за день:</strong> {{ bike.price_per_day }} ₽</p>
+        <p><strong>Адрес парковки:</strong> {{ bike.address }}</p>
+        <p><strong>Категория:</strong> {{ bike.category.name }}</p>
+        <p><strong>Статус:</strong> {{ bike.get_is_available_display }}</p>
+
+        {% if bike.tech_passport %}
+            <div class="tech-passport">
+                <h3>Технический паспорт</h3>
+                <p><strong>Серийный номер:</strong> {{ bike.tech_passport.serial_number }}</p>
+                <p><strong>Год выпуска:</strong> {{ bike.tech_passport.year_of_manufacture }}</p>
+                <p><strong>Пробег:</strong> {{ bike.tech_passport.mileage }} км</p>
+                <p><strong>Дата последнего ТО:</strong> {{ bike.tech_passport.last_maintenance|date:"d-m-Y" }}</p>
+                <p><strong>Заряд батареи:</strong> {{ bike.tech_passport.battery_health }}%</p>
+            </div>
+        {% endif %}
+
+        <p><strong>Описание:</strong></p>
+        <p>{{ bike.description|linebreaks }}</p>
+    </div>
+
+    <a href="{% url 'home' %}" class="btn-back">← Назад к списку</a>
+</div>
+
+<style>
+    .bike-photo {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .bike-photo img {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .bike-photo.placeholder {
+        background: #f5f7fa;
+        padding: 60px;
+        border-radius: 20px;
+        text-align: center;
+        color: #95a5a6;
+    }
+
+    .bike-photo.placeholder i {
+        font-size: 64px;
+        margin-bottom: 15px;
+    }
+
+    .btn-back {
+        display: inline-block;
+        background: #95a5a6;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 30px;
+        text-decoration: none;
+        margin-top: 20px;
+        transition: background 0.2s;
+    }
+
+    .btn-back:hover {
+        background: #7f8c8d;
+    }
+</style>
+{% endblock %}

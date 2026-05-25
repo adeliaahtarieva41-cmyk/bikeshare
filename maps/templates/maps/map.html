@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="map-page">
+    <h1 class="section-title">Велосипеды на карте</h1>
+    
+    <div class="map-container">
+        <div id="map" style="width: 100%; height: 550px; border-radius: 20px;"></div>
+    </div>
+    
+    <div class="map-info">
+        <p><i class="fas fa-info-circle"></i> Нажмите на метку, чтобы увидеть информацию о велосипеде</p>
+    </div>
+</div>
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_maps_api_key }}&lang=ru_RU" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var bikesData = {{ bikes_json|safe }};
+
+    ymaps.ready(function () {
+        var map = new ymaps.Map("map", {
+            center: [55.796127, 49.106405],
+            zoom: 12,
+            controls: ['zoomControl', 'fullscreenControl']
+        });
+
+        var bounds = [];
+
+        bikesData.forEach(function(bike) {
+            if (bike.lat && bike.lon) {
+                var coords = [bike.lat, bike.lon];
+
+                var placemark = new ymaps.Placemark(coords, {
+                    hintContent: bike.name,
+                    balloonContent: '<div class="balloon-content">' +
+                        '<strong>' + bike.name + '</strong><br>' +
+                        '💰 ' + bike.price_per_hour + ' ₽/час<br>' +
+                        '📍 ' + (bike.address || 'Адрес не указан') + '<br>' +
+                        '<a href="' + bike.url + '" class="balloon-link">Подробнее →</a>' +
+                        '</div>'
+                }, {
+                    preset: 'islands#redIcon'
+                });
+
+                map.geoObjects.add(placemark);
+                bounds.push(coords);
+            }
+        });
+
+        if (bounds.length > 0) {
+            map.setBounds(bounds, { zoomMargin: 50 });
+        }
+    });
+</script>
+{% endblock %}

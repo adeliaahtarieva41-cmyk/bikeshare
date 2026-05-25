@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bikes-section">
+    <h1 class="section-title">{{ title }}</h1>
+
+    <!-- КНОПКА "ДОБАВИТЬ ВЕЛОСИПЕД" -->
+        <div class="add-bike-container">
+            <a href="{% url 'add_page' %}" class="btn-add-bike">
+                <i class="fas fa-plus-circle"></i> Добавить велосипед
+            </a>
+        </div>
+
+    {% if bikes %}
+        <!-- СЕТКА 3 КАРТОЧКИ В РЯД -->
+        <div class="bikes-grid">
+            {% for bike in bikes %}
+                <div class="bike-card">
+                    <div class="bike-image">
+                        {% if bike.photo %}
+                            <img src="{{ bike.photo.url }}" alt="{{ bike.name }}">
+                        {% else %}
+                            <img src="{% static 'women/images/' %}{{ bike.slug }}.jpg"
+                                 alt="{{ bike.name }}"
+                                 onerror="this.src='{% static 'women/images/default_bike.jpg' %}'">
+                        {% endif %}
+
+                        <!-- статус-бейдж -->
+                        {% if bike.is_available == 1 %}
+                            <div class="status-badge available">ДОСТУПЕН</div>
+                        {% elif bike.is_available == 2 %}
+                            <div class="status-badge rented">В АРЕНДЕ</div>
+                        {% elif bike.is_available == 3 %}
+                            <div class="status-badge maintenance">НА ОБСЛУЖИВАНИИ</div>
+                        {% else %}
+                            <div class="status-badge unavailable">НЕ ДОСТУПЕН</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="bike-info">
+                        <div class="article-panel">
+                            <span class="category-badge">{{ bike.category.name }}</span>
+                            <span class="date-badge">{{ bike.time_update|date:"d-m-Y H:i" }}</span>
+                        </div>
+
+                        <h3 class="bike-name">{{ bike.name }}</h3>
+
+                        <div class="bike-price">
+                            <span class="price">{{ bike.price_per_hour }}</span>
+                            <span class="price-period">₽ / час</span>
+                        </div>
+
+                        <div class="bike-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ bike.address|default:"Адрес не указан" }}</span>
+                        </div>
+
+                        <p class="bike-description">
+                            {{ bike.description|truncatewords:6|default:"Краткое описание" }}
+                        </p>
+
+                        <a href="{{ bike.get_absolute_url }}" class="btn-details">ПОДРОБНЕЕ →</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- КНОПКА "ВСЕ ВЕЛОСИПЕДЫ" -->
+        <div class="view-all">
+            <a href="{% url 'all_bikes' %}" class="view-all-btn">ВСЕ ВЕЛОСИПЕДЫ →</a>
+        </div>
+
+
+
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-bicycle"></i>
+            <p>Нет доступных велосипедов</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

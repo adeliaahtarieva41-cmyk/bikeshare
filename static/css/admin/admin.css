@@ -1,0 +1,242 @@
+/* Шапка админ-панели */
+#header {
+    background: #1e2a3a;
+    border-bottom: 3px solid #c44569;
+}
+
+/* Название сайта в шапке */
+#site-name a {
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#site-name a:hover {
+    color: #c44569;
+}
+
+/* Блок хлебных крошек */
+div.breadcrumbs {
+    background: #2c3e50;
+    color: #a0b0c0;
+    border-bottom: 1px solid #c44569;
+}
+
+div.breadcrumbs a {
+    color: #c44569;
+}
+
+div.breadcrumbs a:hover {
+    color: white;
+}
+
+/* Заголовки модулей */
+.module h2, .module caption, .inline-group h2 {
+    background: #2c3e50;
+    color: white;
+}
+
+/* Кнопки */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #c44569;
+    color: white;
+    border-radius: 30px;
+    padding: 8px 20px;
+    border: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+    background: #a03a56;
+}
+
+/* Кнопка "Сохранить" */
+.default {
+    background: #2ecc71 !important;
+}
+
+.default:hover {
+    background: #27ae60 !important;
+}
+
+/* Ссылки */
+a {
+    color: #c44569;
+}
+
+a:hover {
+    color: #a03a56;
+}
+
+/* Панель поиска */
+#toolbar form input[type="submit"] {
+    background: #2c3e50;
+}
+
+#toolbar form input[type="submit"]:hover {
+    background: #c44569;
+}
+
+/* Результаты поиска */
+.quiet, a.quiet {
+    color: #7f8c8d;
+}
+
+/* Фильтры в боковой панели */
+#changelist-filter h2 {
+    background: #2c3e50;
+    color: white;
+}
+
+#changelist-filter a {
+    color: #c44569;
+}
+
+#changelist-filter a:hover {
+    color: #a03a56;
+}
+
+#changelist-filter .selected {
+    background: #c44569;
+    color: white;
+    font-weight: bold;
+}
+
+/* Таблица со списком записей */
+.results table th, .results table td {
+    border-bottom: 1px solid #e0e4e8;
+}
+
+.results table th {
+    background: #f5f7fa;
+}
+
+/* Пагинация */
+.paginator a, .paginator .this-page {
+    background: #c44569;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.paginator a:hover {
+    background: #a03a56;
+}
+
+.paginator .this-page {
+    background: #2c3e50;
+}
+
+/* Сообщения (info, success, warning, error) */
+.messagelist li {
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.messagelist li.success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.messagelist li.warning {
+    background: #fff3cd;
+    color: #856404;
+    border-left: 5px solid #ffc107;
+}
+
+.messagelist li.error {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+/* Кастомный виджет для ManyToMany (filter_horizontal) */
+.selector h2 {
+    background: #2c3e50;
+    color: white;
+}
+
+.selector-available h2, .selector-chosen h2 {
+    background: #2c3e50;
+    color: white;
+}
+
+/* Автозаполнение поля */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #c44569;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    #header {
+        padding: 10px;
+    }
+
+    #site-name a {
+        font-size: 14px;
+    }
+}
+
+/* Страница карты */
+.map-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.map-container {
+    margin: 30px 0;
+}
+
+.map-info {
+    text-align: center;
+    margin-top: 20px;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.map-info i {
+    color: #c44569;
+    margin-right: 8px;
+}
+
+.map-placeholder {
+    height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f7fa;
+    border-radius: 20px;
+    color: #95a5a6;
+    font-size: 16px;
+}
+
+/* Стили для балуна */
+.balloon-content {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.balloon-content strong {
+    color: #c44569;
+    font-size: 14px;
+}
+
+.balloon-link {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 12px;
+    background: #c44569;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.balloon-link:hover {
+    background: #a03a56;
+}

@@ -1,0 +1,153 @@
+{% load static %}
+{% load women_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | BikeShare</title>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=1e4557dc-5d8d-4b7e-b2e0-57539c69e518&lang=ru_RU" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'women/css/styles.css' %}">
+</head>
+<body>
+
+    <!-- ШАПКА САЙТА -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="{% url 'home' %}" class="logo">
+                    <i class="fas fa-bicycle"></i>
+                    <span>BikeShare</span>
+                </a>
+
+                <!-- ===== НАВИГАЦИОННОЕ МЕНЮ ===== -->
+                <nav class="desktop-nav">
+                    <ul>
+                        {% for m in mainmenu %}
+                            <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                        {% endfor %}
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'users:profile' %}">{{ user.username }}</a></li>
+                            <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                        {% else %}
+                            <li><a href="{% url 'users:login' %}">Войти</a></li>
+                            <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <!-- ===== КОНЕЦ МЕНЮ ===== -->
+
+                <button class="burger-menu" id="burgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <div class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="{% url 'home' %}">Главная</a></li>
+                    <li><a href="{% url 'all_bikes' %}">Все велосипеды</a></li>
+                    <li><a href="{% url 'about' %}">О проекте</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'add_page' %}">Добавить</a></li>
+                        <li><a href="{% url 'users:profile' %}">{{ user.username }}</a></li>
+                        <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}">Войти</a></li>
+                        <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <main class="main-content">
+        <div class="container content-wrapper">
+            <!-- Боковая панель с категориями -->
+            <aside class="sidebar">
+                <ul id="leftchapters">
+                    {% if cat_selected == 0 or cat_selected is None %}
+                        <li><a href="{% url 'gpt:gpt_page' %}">GPT</a></li>
+                        <li><a href="{% url 'maps:map' %}">Карта велосипедов</a></li>
+                        <li class="selected">Все категории</li>
+                    {% else %}
+                        <li><a href="{% url 'home' %}">Все категории</a></li>
+                    {% endif %}
+                    {% show_categories cat_selected %}
+                </ul>
+            </aside>
+
+            <!-- ОСНОВНАЯ ОБЛАСТЬ -->
+            <div class="main-content-area">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-about">
+                    <a href="{% url 'home' %}" class="footer-logo">
+                        <i class="fas fa-bicycle"></i>
+                        <span>BikeShare</span>
+                    </a>
+                    <p>Аренда велосипедов в вашем городе</p>
+                </div>
+                <div class="footer-nav">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Главная</a></li>
+                        <li><a href="{% url 'all_bikes' %}">Все велосипеды</a></li>
+                        <li><a href="{% url 'about' %}">О проекте</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contacts">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (927) 307-28-77</li>
+                        <li><i class="fas fa-envelope"></i> info@bikeshare.ru</li>
+                    </ul>
+                </div>
+            </div>
+
+            <li><a href="{% url 'maps:map' %}">Карта велосипедов</a></li>
+
+            <div class="footer-bottom">
+                <p>BikeShare.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Бургер-меню
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobileNav = document.getElementById('mobileNav');
+
+        if (burgerMenu && mobileNav) {
+            burgerMenu.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                burgerMenu.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            });
+
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('active');
+                    burgerMenu.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>

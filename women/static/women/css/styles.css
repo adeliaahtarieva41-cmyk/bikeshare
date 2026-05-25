@@ -1,0 +1,711 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #1e2a3a;
+}
+
+/* Секция велосипедов */
+.bikes-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.section-title {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e2a3a;
+    position: relative;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #c44569;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* СЕТКА 3 КАРТОЧКИ В РЯД */
+.bikes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin: 30px 0;
+}
+
+/* АДАПТИВ ДЛЯ ПЛАНШЕТОВ (2 КАРТОЧКИ) */
+@media (max-width: 900px) {
+    .bikes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* АДАПТИВ ДЛЯ ТЕЛЕФОНОВ (1 КАРТОЧКА) */
+@media (max-width: 600px) {
+    .bikes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* КАРТОЧКА ВЕЛОСИПЕДА */
+.bike-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.bike-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* КАРТИНКА */
+.bike-image {
+    position: relative;
+    height: 200px;
+    background: #f0f2f5;
+    overflow: hidden;
+}
+
+.bike-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.bike-card:hover .bike-image img {
+    transform: scale(1.05);
+}
+
+/* ПЛАШКА СТАТУСА */
+.status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+.status-badge.available {
+    background: #2ecc71;
+}
+
+.status-badge.unavailable {
+    background: #e74c3c;
+}
+
+.status-badge.rented {
+    background: #f39c12;
+}
+
+.status-badge.maintenance {
+    background: #95a5a6;
+}
+
+/* ИНФОРМАЦИЯ */
+.bike-info {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Панель с категорией и датой */
+.article-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.category-badge {
+    background: #c44569;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.date-badge {
+    color: #7f8c8d;
+    font-size: 11px;
+    font-style: italic;
+}
+
+.bike-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e2a3a;
+    margin-bottom: 8px;
+}
+
+.bike-price {
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #c44569;
+}
+
+.price-period {
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+.bike-location {
+    font-size: 13px;
+    color: #5a6e7a;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bike-location i {
+    color: #c44569;
+}
+
+.bike-description {
+    font-size: 13px;
+    color: #4a5b6a;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+/* КНОПКА ПОДРОБНЕЕ */
+.btn-details {
+    display: inline-block;
+    background: #c44569;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.btn-details:hover {
+    background: #a03a56;
+}
+
+/* КНОПКА ВСЕ ВЕЛОСИПЕДЫ */
+.view-all {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.view-all-btn {
+    display: inline-block;
+    background: #2c3e50;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.view-all-btn:hover {
+    background: #c44569;
+}
+
+/* ========== ШАПКА САЙТА ========== */
+.main-header {
+    background: #1e2a3a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    gap: 30px;
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+.logo i {
+    color: #c44569;
+    font-size: 28px;
+}
+
+.logo span {
+    background: linear-gradient(135deg, #fff, #c44569);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Десктопное меню */
+.desktop-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.desktop-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.desktop-nav a:hover {
+    color: #c44569;
+}
+
+/* Кнопка в шапке */
+.header-cta {
+    background: #c44569;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-cta:hover {
+    background: #a03a56;
+}
+
+/* Бургер-меню (скрыто на десктопе) */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.burger-menu span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: 0.2s;
+}
+
+.burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Мобильное меню */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: #1e2a3a;
+    padding: 80px 30px 30px;
+    transition: right 0.3s ease;
+    z-index: 999;
+}
+
+.mobile-nav.active {
+    right: 0;
+}
+
+.mobile-nav ul {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.mobile-nav li {
+    margin-bottom: 20px;
+}
+
+.mobile-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.mobile-cta {
+    display: inline-block;
+    background: #c44569;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+}
+
+/* ========== ПОДВАЛ ========== */
+.main-footer {
+    background: #0f1922;
+    color: #a0b0c0;
+    padding: 50px 0 20px;
+    margin-top: 60px;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+.footer-logo i {
+    color: #c44569;
+}
+
+.footer-about p {
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social a {
+    color: #a0b0c0;
+    font-size: 20px;
+    transition: color 0.2s;
+}
+
+.footer-social a:hover {
+    color: #c44569;
+}
+
+.footer-nav h4,
+.footer-contacts h4,
+.footer-hours h4 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.footer-nav ul,
+.footer-contacts ul,
+.footer-hours ul {
+    list-style: none;
+}
+
+.footer-nav li,
+.footer-contacts li,
+.footer-hours li {
+    margin-bottom: 12px;
+}
+
+.footer-nav a {
+    color: #a0b0c0;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-nav a:hover {
+    color: #c44569;
+}
+
+.footer-contacts i,
+.footer-hours i {
+    width: 25px;
+    color: #c44569;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+.footer-bottom p {
+    margin: 5px 0;
+}
+
+/* ========== БОКОВАЯ ПАНЕЛЬ ========== */
+#leftchapters {
+    list-style: none;
+    padding: 0;
+}
+
+#leftchapters li {
+    margin-bottom: 5px;
+}
+
+#leftchapters a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Теги в боковой панели */
+.tags-title {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+#leftchapters .tags-title {
+    list-style: none;
+    padding: 8px 0;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+#leftchapters a[href*="/tag/"] {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin: 3px 0;
+    font-size: 12px;
+}
+
+#leftchapters a[href*="/tag/"]:hover {
+    background: #c44569;
+    color: white;
+}
+
+/* Теги на странице велосипеда */
+.bike-tags {
+    margin: 15px 0 20px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.tags-label {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.tag-link {
+    background: #c44569;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.tag-link:hover {
+    background: #a03a56;
+}
+
+/* Технический паспорт */
+.tech-passport {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.tech-passport h3 {
+    color: #c44569;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.tech-passport p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* ========== ОБЩИЕ КОМПОНЕНТЫ ========== */
+.content-wrapper {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.main-content-area {
+    flex: 1;
+}
+
+/* Пустое состояние */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #95a5a6;
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+/* ========== АДАПТИВ ========== */
+@media (max-width: 992px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .desktop-nav,
+    .header-cta {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .header-inner {
+        justify-content: space-between;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-nav ul,
+    .footer-contacts ul,
+    .footer-hours ul {
+        text-align: center;
+    }
+}
+
+/* Шапка секции с заголовком и кнопкой */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.section-header .section-title {
+    margin-bottom: 0;
+}
+
+.section-header .section-title:after {
+    display: none;
+}
+
+/* Кнопка добавления велосипеда */
+.btn-add-bike {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #c44569;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-add-bike:hover {
+    background: #a03a56;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-add-bike i {
+    font-size: 16px;
+}
+
+/* Для варианта 2 */
+.add-bike-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
