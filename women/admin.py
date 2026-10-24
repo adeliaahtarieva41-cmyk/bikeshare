@@ -2,8 +2,6 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Bike, Category, TagBike, TechPassport
 
-
-# ПОЛЬЗОВАТЕЛЬСКИЙ ФИЛЬТР ПО ТЕГАМ
 class TagFilter(admin.SimpleListFilter):
     title = 'По тегам'
     parameter_name = 'tag'
@@ -31,14 +29,12 @@ class BikeAdmin(admin.ModelAdmin):
     ordering = ('-time_create', 'name')
     search_fields = ('name', 'brand', 'model', 'category__name', 'tags__tag')
 
-    # ФИЛЬТРЫ (добавлен TagFilter)
     list_filter = (TagFilter, 'is_available', 'category', 'brand')
 
     list_per_page = 10
     prepopulated_fields = {'slug': ('name',)}
     filter_horizontal = ('tags',)
 
-    # Поля в форме редактирования
     fields = (
         'name', 'slug', 'brand', 'model', 'category', 'tags',
         'price_per_hour', 'price_per_day', 'address', 'description',
@@ -46,10 +42,8 @@ class BikeAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('post_photo',)
 
-    # Показывать кнопки сохранения сверху
     save_on_top = True
 
-    # МЕТОД ДЛЯ ОТОБРАЖЕНИЯ МИНИАТЮРЫ В АДМИНКЕ
     @admin.display(description="Фото")
     def post_photo(self, bike: Bike):
         if bike.photo:
