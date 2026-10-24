@@ -5,7 +5,6 @@
 <div class="bikes-section">
     <h1 class="section-title">{{ title }}</h1>
 
-    <!-- КНОПКА "ДОБАВИТЬ ВЕЛОСИПЕД" -->
         <div class="add-bike-container">
             <a href="{% url 'add_page' %}" class="btn-add-bike">
                 <i class="fas fa-plus-circle"></i> Добавить велосипед
@@ -13,7 +12,6 @@
         </div>
 
     {% if bikes %}
-        <!-- СЕТКА 3 КАРТОЧКИ В РЯД -->
         <div class="bikes-grid">
             {% for bike in bikes %}
                 <div class="bike-card">
@@ -26,7 +24,6 @@
                                  onerror="this.src='{% static 'women/images/default_bike.jpg' %}'">
                         {% endif %}
 
-                        <!-- статус-бейдж -->
                         {% if bike.is_available == 1 %}
                             <div class="status-badge available">ДОСТУПЕН</div>
                         {% elif bike.is_available == 2 %}
@@ -66,7 +63,6 @@
             {% endfor %}
         </div>
 
-        <!-- КНОПКА "ВСЕ ВЕЛОСИПЕДЫ" -->
         <div class="view-all">
             <a href="{% url 'all_bikes' %}" class="view-all-btn">ВСЕ ВЕЛОСИПЕДЫ →</a>
         </div>
